@@ -22,14 +22,14 @@ const userSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            defaults:[],
+            default:[],
         }
     ],
     following: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            defaults:[],
+            default:[],
         }
     ],
     profileImg: {

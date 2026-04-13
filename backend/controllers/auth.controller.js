@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 
 export const signup = async (req,res) => {
     try {
+        // console.log("BODY:", req.body);
         const {fullname, username, email, password} = req.body;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,8 +22,12 @@ export const signup = async (req,res) => {
             return res.status(400).json({error : "Email already taken"});
         }
 
+        if(password.length < 6) {
+            return res.status(400).json({error: "Password must be 6 char long.."});
+        }
+
         // hashing password
-        const salt = await bcrypt.gensalt(10);
+        const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // creating new user
@@ -55,6 +60,7 @@ export const signup = async (req,res) => {
         }
 
     } catch (error) {
+        // console.log("ERROR:", error);
         console.log( `Error in signup controller : ${error.message}`)
         res.status(500).json({error:"Internal Server Error"});
     }
